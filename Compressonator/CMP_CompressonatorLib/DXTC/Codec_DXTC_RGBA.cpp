@@ -144,7 +144,7 @@ CodecError CCodec_DXTC::CompressRGBBlock(CMP_BYTE rgbBlock[BLOCK_SIZE_4X4X4], CM
 
 CodecError CCodec_DXTC::CompressRGBBlock_Fast(CMP_BYTE rgbBlock[BLOCK_SIZE_4X4X4], CMP_DWORD compressedBlock[2])
 {
-#ifdef _WIN32
+#if !defined(_WIN64) && defined(_WIN32)
 #ifndef DISABLE_TESTCODE
     DXTCV11CompressBlockSSE((DWORD*) rgbBlock, compressedBlock);
 #else
@@ -158,14 +158,14 @@ CodecError CCodec_DXTC::CompressRGBBlock_Fast(CMP_BYTE rgbBlock[BLOCK_SIZE_4X4X4
 
 CodecError CCodec_DXTC::CompressRGBBlock_SuperFast(CMP_BYTE rgbBlock[BLOCK_SIZE_4X4X4], CMP_DWORD compressedBlock[2])
 {
-    #if defined(USE_SSE2)
+    #if defined(USE_SSE2) && !defined(_WIN64) && defined(_WIN32)
 #ifdef _WIN64
     // todo: fix sse2 asm function 
     DXTCV11CompressBlockSSE2((DWORD*)rgbBlock, compressedBlock);
 #else
     DXTCV11CompressBlockSSEMinimal((DWORD*)rgbBlock, compressedBlock);
 #endif
-    #elif defined(USE_SSE)
+    #elif defined(USE_SSE) && !defined(_WIN64) && defined(_WIN32)
         DXTCV11CompressBlockSSE((DWORD*) rgbBlock, compressedBlock);
     #else
         CompressRGBBlock(rgbBlock, compressedBlock);

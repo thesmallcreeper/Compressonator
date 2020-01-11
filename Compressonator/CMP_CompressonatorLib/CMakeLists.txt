@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
+project(Compressonator)
+
 add_library(Compressonator STATIC "")
 
 file(GLOB_RECURSE CMP_SRCS

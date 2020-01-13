@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
+project(Compressonator)
+
 add_library(CMP_Framework STATIC "")
 file(GLOB_RECURSE half
      "Common/half/*.h"
